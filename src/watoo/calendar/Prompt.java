@@ -1,6 +1,5 @@
 package watoo.calendar;
 
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Prompt {
@@ -20,7 +19,7 @@ public class Prompt {
      *
      */
 
-    public void runPrompt() throws ParseException {
+    public void runPrompt() {
         printMenu();
         Scanner sc = new Scanner(System.in);
         Calendar cal = new Calendar();
@@ -74,17 +73,17 @@ public class Prompt {
         System.out.println("[일정 검색]");
         System.out.println("날짜를 입력해 주세요(yyyy-MM-dd).");
         String date = sc.next();
-        String plan = "";
-        try {
-            plan = c.searchPlan(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.out.println("일정 검색 중 오류가 발생했습니다.");
+        PlanItem plan;
+        plan = c.searchPlan(date);
+        if (plan != null) {
+            System.out.println(plan.detail);
         }
-        System.out.println(plan);
+        else {
+            System.out.println("일정이 없습니다.");
+        }
     }
 
-    private void cmdRegister(Scanner sc, Calendar c) throws ParseException {
+    private void cmdRegister(Scanner sc, Calendar c) {
         System.out.println("[새 일정 등록]");
         System.out.println("날짜를 입력해 주세요(yyy-MM-dd).");
         String date = sc.next();
@@ -101,7 +100,7 @@ public class Prompt {
     }
 
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         //셸 실행
         Prompt p = new Prompt();
         p.runPrompt();
